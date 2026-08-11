@@ -45,11 +45,12 @@ it stitches the sub-files automatically), extracted halo positions
 
 **Results** (~4×10⁵ halos each, no mass cut for the moment):
 
-| simulation | pNL   | N_tet    | asymmetry A | A/√N   |
-|------------|-------|----------|-------------|--------|
-| fiducial   | 0     | 2757091  | -1785       | -1.1σ  |
-| ODD_p      | +1e6  | 2751143  | +1329       | +0.8σ  |
-| ODD_m      | -1e6  | 2752269  | +303        | +0.2σ  |
+| simulation | pNL   | N_tet    | N+       | N-       | A     | A/√N   |
+|------------|-------|----------|----------|----------|-------|--------|
+| fiducial   | 0     | 2757091  | 1377653  | 1379438  | -1785 | -1.1σ  |
+| ODD_p      | +1e6  | 2751143  | 1376236  | 1374907  | +1329 | +0.8σ  |
+| ODD_m      | -1e6  | 2752269  | 1376286  | 1375983  | +303  | +0.2σ  |
+
 
 - **Null test passes** on the real fiducial: A = -1785 ≈ -1.1σ, consistent with zero.
 - **Paired difference:** A(ODD_p) - A(ODD_m) = 1329 - 303 = **+1026**, with the
