@@ -2,7 +2,6 @@ name: delaunay-parity
 channels:
   - conda-forge
 dependencies:
-  # Stack Python (analyse, chiralité, graphiques)
   - python=3.11
   - numpy
   - scipy
@@ -11,7 +10,6 @@ dependencies:
   - h5py
   - jupyterlab
   - tqdm
-  # Outils pour compiler DIVE (C++ / CGAL)
   - cmake
   - cxx-compiler
   - cgal-cpp
