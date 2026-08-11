@@ -1,3 +1,15 @@
 *.hdf5
 data/
 .DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated data & DIVE outputs 
+*.txt
+
+# Downloaded Quijote catalogs
+ODD_p_310/
+ODD_m_310/
+fiducial_10825a/
