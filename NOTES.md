@@ -2,7 +2,6 @@
 
 ## Monday, August 10
 
-- **Project chosen:** parity violation in large-scale structure using Delaunay triangulation.
 - **Set up the `delaunay-parity` repo** on my machine (with a `README` and a `.gitignore`), linked my SSH key to my GitHub account, then:
   `git init` → `git add .` → `git commit -m "message"` → `git branch -M main` → `git remote add origin git@github.com:josue-aubert/<repo-name>.git` → `git push -u origin main` (afterwards a plain `git push` is enough).
 - **Forked Cheng's `DIVE` repo** to my GitHub, then cloned it locally with `git clone git@github.com:josue-aubert/DIVE.git`.
@@ -66,7 +65,32 @@ it stitches the sub-files automatically), extracted halo positions
   data is hosted in the US while we are in China, and possibly because each ODD_m /
   ODD_p catalog is split into ~128 small files (the huge number of files may slow
   the transfer).
-- **Meanwhile,** downloaded 4 realizations of each set to my own machine to validate
+- Meanwhile downloaded 4 realizations of each set to my own machine to validate
   the analysis. Wrote `test_on_four_each.py`, which applies DIVE to each simulation
   (~50 s per simulation).
+- Wrote a first analysis script that reads the parity .txt files and prints, for
+  each simulation, the number of positive-parity tetrahedra N+, the number of
+  negative-parity tetrahedra N-, and their difference A = N+ - N- (a first statistic).
 
+| set      | real | A     | N_tet    |
+|----------|------|-------|----------|
+| ODD_p    | 0    | 1068  | 2750194  |
+| ODD_p    | 1    | 1107  | 2760341  |
+| ODD_p    | 2    | -351  | 2747579  |
+| ODD_p    | 3    | -1396 | 2759798  |
+| ODD_m    | 0    | -39   | 2751233  |
+| ODD_m    | 1    | 146   | 2763806  |
+| ODD_m    | 2    | -102  | 2749048  |
+| ODD_m    | 3    | -564  | 2760614  |
+| fiducial | 0    | -199  | 2752961  |
+| fiducial | 1    | -2206 | 2760996  |
+| fiducial | 2    | 1013  | 2746501  |
+| fiducial | 3    | -996  | 2758066  |
+
+| set      | mean A  | std A  |
+|----------|---------|--------|
+| ODD_p    | 107.0   | 1047.9 |
+| ODD_m    | -139.75 | 261.4  |
+| fiducial | -597.0  | 1172.5 |
+
+-> with only 4 realizations per set this is far too noisy to conclude, the full 500 realizations are needed.
