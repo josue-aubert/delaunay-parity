@@ -55,3 +55,18 @@ it stitches the sub-files automatically), extracted halo positions
 - **Null test passes** on the real fiducial: A = -1785 ≈ -1.1σ, consistent with zero.
 - **Paired difference:** A(ODD_p) - A(ODD_m) = 1329 - 303 = **+1026**, with the
   expected sign (pNL>0 gives a more positive asymmetry).
+
+## Wednesday, August 12
+
+- **SSH to the Tsinghua server fixed:** it now works from any network with
+  `ssh -p 1918 jaubert@chat.iastro.cn`.
+- **Trying to bring the 500 z=0 realizations of each set** (fiducial, ODD_m, ODD_p)
+  from the Quijote server to Tsinghua via Globus. Problem: each catalog is ~35 MB
+  → ~50 GB total, and the download speed stays at 150–200 KB/s. Likely because the
+  data is hosted in the US while we are in China, and possibly because each ODD_m /
+  ODD_p catalog is split into ~128 small files (the huge number of files may slow
+  the transfer).
+- **Meanwhile,** downloaded 4 realizations of each set to my own machine to validate
+  the analysis. Wrote `test_on_four_each.py`, which applies DIVE to each simulation
+  (~50 s per simulation).
+

@@ -13,3 +13,8 @@ __pycache__/
 ODD_p_310/
 ODD_m_310/
 fiducial_10825a/
+
+# Data for the test on four simulations each
+fiducial/
+ODD_m/
+ODD_p/
