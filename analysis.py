@@ -14,12 +14,13 @@ Ts_ODD_p = []
 Ts_ODD_m = []
 Ts_fiducial = []
 
-n_realizations = len(os.listdir(inputdir)) // 3  # Assuming equal number of realizations for each set
+n_realizations = len(os.listdir(inputdir)) // 3    # Assuming equal number of realizations for each set
 
 for s in ["ODD_p", "ODD_m", "fiducial"]:
     for real in range(0, n_realizations):
         filename = f"{inputdir}/{s}_{real}_parity.txt"
-        parity = np.loadtxt(filename, usecols=4)
+        parity = np.loadtxt(filename, usecols=1)    # Assuming parity is in the second column (index 1)
+        radius = np.loadtxt(filename, usecols=0)    # Assuming radius is in the first column (index 0)
         parity_signs = np.sign(parity)
         T = parity_signs.sum()
         print(f"{s} {real}: T = {T}, Number of tetrahedra = {len(parity_signs)}")
