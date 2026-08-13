@@ -22,7 +22,7 @@ for s in ["ODD_p", "ODD_m", "fiducial"]:
         parity = np.loadtxt(filename, usecols=4)
         parity_signs = np.sign(parity)
         T = parity_signs.sum()
-        print(f"{s} {real}: T = {T}, Number of sim = {len(parity_signs)}")
+        print(f"{s} {real}: T = {T}, Number of tetrahedra = {len(parity_signs)}")
         if s == "ODD_p":
             Ts_ODD_p.append(T)
         elif s == "ODD_m":
