@@ -94,3 +94,9 @@ it stitches the sub-files automatically), extracted halo positions
 | fiducial | -597.0  | 1172.5 |
 
 -> with only 4 realizations per set this is far too noisy to conclude, the full 500 realizations are needed.
+
+## Thursday, August 13
+
+- Les données ont bien été téléchargée sur le serveur de Tsinghua (grâce au Prof. Zhao), on peut tester le script sur le serveur
+- 
+

@@ -1,15 +1,24 @@
+import os, subprocess, argparse
 import numpy as np
-import matplotlib.pyplot as plt
 
-datadir = "/Users/josueaubert/Documents/Tsinghua2026/delaunay-parity/test_on_four_each_out"
+ap = argparse.ArgumentParser(
+    description="Analyze parity data from DIVE runs.",
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+ap.add_argument("-i", "--input",  default=".",
+                help="input directory containing ONLY the ODD_p/ ODD_m/ fiducial/ folders")
+args = ap.parse_args()
+
+inputdir = args.input
 
 Ts_ODD_p = []
 Ts_ODD_m = []
 Ts_fiducial = []
 
+n_realizations = len(os.listdir(inputdir)) // 3  # Assuming equal number of realizations for each set
+
 for s in ["ODD_p", "ODD_m", "fiducial"]:
-    for real in range(0, 4):
-        filename = f"{datadir}/{s}_{real}_parity.txt"
+    for real in range(0, n_realizations):
+        filename = f"{inputdir}/{s}_{real}_parity.txt"
         parity = np.loadtxt(filename, usecols=4)
         parity_signs = np.sign(parity)
         T = parity_signs.sum()
