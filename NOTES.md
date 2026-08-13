@@ -112,4 +112,4 @@ it stitches the sub-files automatically), extracted halo positions
   `python first_test_server.py -i /data/users/czhao/Quijote/Halos/FoF -d /home/jaubert/DIVE/DIVE -o /data/users/jaubert/first_test_server_out -n 3`
   and `python analysis.py -i /data/users/jaubert/first_test_server_out`
   → the results are identical to those on my own machine: the pipeline is validated!
-
+- Fait tourner un test à 30 simulations de chaque type pour voir combien de temps il faudrait, avec tmux et les commandes suivantes : tmux new -s parity → crée une session nommée « parity », Ctrl-b puis d → détache (la session continue en fond), tmux attach -t parity → revenir dedans, tmux ls → lister tes sessions.
