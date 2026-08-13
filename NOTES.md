@@ -130,12 +130,32 @@ it stitches the sub-files automatically), extracted halo positions
     done
     wait
     echo "ALL DONE"
-- Optimisé le script d'analyse analysis.py en utilisant pandas pd.readcsv().to_numpy() plutot que numpy np.loadtxt
-- Lancé l'analyse brute sur les 1500 simulations: voici les résultats 
+- Optimized `analysis.py` using `pd.read_csv(...).to_numpy()` instead of `np.loadtxt`
+  (one read per file): analysis of the 1500 files dropped from a few hours to ~13 min.
 
-ODD_p mean T = -23.764, std = 1719.1378747220945
-ODD_m mean T = 34.412, std = 1756.3435205722142
-fiducial mean T = -19.63, std = 1746.4171692639763
-Avec T qui est toujours le nombre de parités positives moins le nombre de parités négatives
-- On essaie plutot simplement en additionnant les parités plutot que les signes des parités 
-- Créé un script d'analyse par bins 
+- Ran the raw (unbinned) analysis on all 500 realizations of each set.
+
+  **A = N+ − N-** (positive minus negative parity tetrahedra):
+
+  | set      | mean A  | std A  |
+  |----------|---------|--------|
+  | ODD_p    | -23.76  | 1719   |
+  | ODD_m    | 34.41   | 1756   |
+  | fiducial | -19.63  | 1746   |
+
+  Error on the mean = std/√500. Null test: fiducial = -19.6 ± 78 → -0.25σ ✓.
+  Paired signal ⟨A_p − A_m⟩ = -58 ± ~110 → **-0.5σ**, not significant.
+
+  **T = sum of signed volumes** (instead of signs):
+
+  | set      | mean T  | std T |
+  |----------|---------|-------|
+  | ODD_p    | -103    | 6913  |
+  | ODD_m    | -374    | 7089  |
+  | fiducial | -291    | 6745  |
+
+  Null: -291 ± 302 → -1.0σ. Paired signal ⟨T_p − T_m⟩ = +270 ± ~443 → **+0.6σ**, not significant.
+
+- **Conclusion:** neither global statistic detects pNL (both consistent with zero, and
+  opposite signs → noise). next step: bin by radius R and build a Fisher matrix.
+
