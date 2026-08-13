@@ -97,6 +97,19 @@ it stitches the sub-files automatically), extracted halo positions
 
 ## Thursday, August 13
 
-- Les données ont bien été téléchargée sur le serveur de Tsinghua (grâce au Prof. Zhao), on peut tester le script sur le serveur
-- 
+- The data has been downloaded onto the Tsinghua server (thanks to Prof. Zhao), so
+  the pipeline can now be tested directly on the server.
+- Created a new test script `first_test_server.py` and updated `analysis.py` so that
+  both take their paths as command-line arguments (input / output / DIVE path for the
+  test script; input for the analysis script). For now the analysis script just prints
+  to the terminal the number of tetrahedra found, the parity difference, and the
+  means & standard deviations.
+- Cloned this repo into `~/jaubert`, installed Miniconda, created the environment from
+  the repo's `environment.yml` with `conda env create -f environment.yml`, and
+  activated it.
+- Cloned the DIVE repo and compiled it with `cmake -DCMAKE_BUILD_TYPE=Release .` then `make`.
+- Ran a first test:
+  `python first_test_server.py -i /data/users/czhao/Quijote/Halos/FoF -d /home/jaubert/DIVE/DIVE -o /data/users/jaubert/first_test_server_out -n 3`
+  and `python analysis.py -i /data/users/jaubert/first_test_server_out`
+  → the results are identical to those on my own machine: the pipeline is validated!
 
