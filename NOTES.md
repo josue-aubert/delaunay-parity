@@ -112,4 +112,21 @@ it stitches the sub-files automatically), extracted halo positions
   `python first_test_server.py -i /data/users/czhao/Quijote/Halos/FoF -d /home/jaubert/DIVE/DIVE -o /data/users/jaubert/first_test_server_out -n 3`
   and `python analysis.py -i /data/users/jaubert/first_test_server_out`
   → the results are identical to those on my own machine: the pipeline is validated!
-- Fait tourner un test à 30 simulations de chaque type pour voir combien de temps il faudrait, avec tmux et les commandes suivantes : tmux new -s parity → crée une session nommée « parity », Ctrl-b puis d → détache (la session continue en fond), tmux attach -t parity → revenir dedans, tmux ls → lister tes sessions.
+- Ran a test on 30 realizations using tmux  so the job keeps running on the server even after
+  disconnecting the SSH : `tmux new -s parity` creates a session named "parity", `Ctrl-b` then `d` detaches it
+  (the session keeps running in the background), `tmux attach -t parity` reattaches, and
+  `tmux ls` lists the sessions.
+- Modified the output script to stop keeping the position of the circumsphere centres,
+  saving space (2 text columns instead of 5): ~160 MB -> ~45 MB per simulation.
+- Modified the parity script so it can take `--start` and `--end` indices defining which
+  realizations to process, and parallelized the work on the server across 25 cores. The
+  full run (500 of each set, 1500 simulations) took about 45 minutes:
+
+    for c in $(seq 0 20 499); do
+      end=$((c+20))
+      python first_test_server.py -i /data/users/czhao/Quijote/Halos/FoF \
+        -d ~/DIVE/DIVE -o /data/users/jaubert/parity_out \
+        --start $c --end $end > ~/log_$c.txt 2>&1 &
+    done
+    wait
+    echo "ALL DONE"
