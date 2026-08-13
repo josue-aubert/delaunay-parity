@@ -130,3 +130,12 @@ it stitches the sub-files automatically), extracted halo positions
     done
     wait
     echo "ALL DONE"
+- Optimisé le script d'analyse analysis.py en utilisant pandas pd.readcsv().to_numpy() plutot que numpy np.loadtxt
+- Lancé l'analyse brute sur les 1500 simulations: voici les résultats 
+
+ODD_p mean T = -23.764, std = 1719.1378747220945
+ODD_m mean T = 34.412, std = 1756.3435205722142
+fiducial mean T = -19.63, std = 1746.4171692639763
+Avec T qui est toujours le nombre de parités positives moins le nombre de parités négatives
+- On essaie plutot simplement en additionnant les parités plutot que les signes des parités 
+- Créé un script d'analyse par bins 
