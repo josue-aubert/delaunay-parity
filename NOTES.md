@@ -120,7 +120,7 @@ it stitches the sub-files automatically), extracted halo positions
   saving space (2 text columns instead of 5): ~160 MB -> ~45 MB per simulation.
 - Modified the parity script so it can take `--start` and `--end` indices defining which
   realizations to process, and parallelized the work on the server across 25 cores. The
-  full run (500 of each set, 1500 simulations) took about 45 minutes:
+  full run (500 of each set, 1500 simulations) took about 2h20min:
 
     for c in $(seq 0 20 499); do
       end=$((c+20))
