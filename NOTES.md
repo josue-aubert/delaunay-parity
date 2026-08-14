@@ -206,15 +206,16 @@ $$\Rightarrow \left\langle \frac{\partial^2(\ln\mathcal L)}{\partial\theta_i\,\p
 $\theta = p_{\rm NL}$, only one parameter.
  
 **Data:** $\vec A = (A_1, \dots, A_K)$, $K$ = number of bins — defined **for one simulation!**
-> example: for ODD_p, simulation 355: $d_8 = A_8 = (\#_+\text{ in bin }8) - (\#_-\text{ in bin }8)$
- 
+
+One possible example of A : for `ODD_p`, simulation 355: $d_8 = A_8 = N_+^{(8)} - N_-^{(8)}$
+
 **Model:**
  
-$$\langle A_k\rangle(p_{\rm NL}) \approx \alpha_k\,p_{\rm NL}, \qquad \vec\alpha = \frac{\partial\langle\vec A\rangle}{\partial p_{\rm NL}} \quad \text{(response vector)}$$
+$$\langle A_k\rangle(p_{\rm NL}) \approx \alpha_k \cdot p_{\rm NL}, \qquad \vec\alpha = \frac{\partial\langle\vec A\rangle}{\partial p_{\rm NL}} \quad \text{(response vector)}$$
  
 For a matched seed $r$: $A_{p,k}[r] = +\alpha_k P + \eta_k[r]$ and $A_{m,k}[r] = -\alpha_k P + \eta_k[r]$, so
  
-$$D_k[r] = A_{p,k}[r] - A_{m,k}[r] = 2\alpha_k P \qquad (N = 500 = \#\text{ seeds})$$
+$$D_k[r] = A_{p,k}[r] - A_{m,k}[r] = 2\alpha_k P \qquad (N = 500 = \text{ seeds})$$
  
 $$\Rightarrow \text{per-bin estimator:}\quad \hat\alpha_k = \frac{1}{2P}\,\frac{1}{N}\sum_{r=1}^{N}\big(A_{p,k}[r] - A_{m,k}[r]\big)$$
  
