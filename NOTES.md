@@ -159,3 +159,83 @@ it stitches the sub-files automatically), extracted halo positions
 - **Conclusion:** neither global statistic detects pNL (both consistent with zero, and
   opposite signs → noise). next step: bin by radius R and build a Fisher matrix.
 
+## Friday, August 14
+
+- Define the theoretical background behind the statistics.
+
+### Fisher formalism
+ 
+Probability of observing data $\vec d$ for a set of parameters $\vec\theta = \{\theta_1, \dots, \theta_n\}$ $\equiv$ likelihood $\mathcal L(\vec d, \vec\theta)$.
+ 
+**Fisher information:**
+ 
+$$F_{ij} = -\left\langle \frac{\partial^2 (\ln\mathcal L)}{\partial\theta_i\,\partial\theta_j} \right\rangle$$
+ 
+$\to$ mean curvature of the log-likelihood around its maximum. A sharp peak $\Rightarrow$ highly informative data.
+ 
+**Cramér–Rao bound:**
+ 
+$$\mathrm{Cov}(\vec\theta) \ge F^{-1} \quad\Rightarrow\quad \sigma(\theta_i) \ge \sqrt{(F^{-1})_{ii}}$$
+ 
+### Gaussian case
+ 
+Assume $P(d) = \dfrac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left(\dfrac{-(d-\mu)^2}{2\sigma^2}\right)$. For $\vec d$ independent, $\dim(\vec d) = K$:
+ 
+$$P(\vec d) = \prod_{k=1}^{K} \frac{1}{\sqrt{2\pi}\,\sigma_k}\exp\!\left(\frac{-(d_k-\mu_k)^2}{2\sigma_k^2}\right)$$
+ 
+$\to$ **General formula** (also valid if $C_{ij}\neq 0$):
+ 
+$$P(\vec d) = \frac{1}{(2\pi)^{K/2}\,|C|^{1/2}}\exp\!\left(-\tfrac12(\vec d - \vec\mu)^\top C^{-1}(\vec d - \vec\mu)\right) \equiv \mathcal L(\vec d\,|\,\vec\theta)$$
+ 
+because $\vec\mu = \vec\mu(\vec\theta)$, $\dfrac{\partial\vec d}{\partial\theta_i} = 0$, and $C \neq C(\vec\theta)$ (simplification $\to$ negligible).
+ 
+$$\Rightarrow \ln\mathcal L = \text{const} - \tfrac12(\vec d - \vec\mu)^\top C^{-1}(\vec d - \vec\mu)$$
+ 
+$$\frac{\partial(\ln\mathcal L)}{\partial\theta_i} = -\tfrac12\frac{\partial}{\partial\theta_i}\!\left(\vec r^\top C^{-1}\vec r\right) = -\tfrac12\left(-2\,\frac{\partial\vec\mu^\top}{\partial\theta_i}C^{-1}(\vec d - \vec\mu)\right) = \frac{\partial\vec\mu^\top}{\partial\theta_i}C^{-1}(\vec d - \vec\mu) \quad (C^{-1}\text{ sym.})$$
+ 
+with $\vec r = \vec d - \vec\mu$. Second derivative:
+ 
+$$\frac{\partial^2(\ln\mathcal L)}{\partial\theta_i\,\partial\theta_j} = \frac{\partial^2\vec\mu^\top}{\partial\theta_i\,\partial\theta_j}C^{-1}(\vec d - \vec\mu) - \frac{\partial\vec\mu^\top}{\partial\theta_i}C^{-1}\frac{\partial\vec\mu}{\partial\theta_j}$$
+ 
+Taking the average, the first term vanishes since $\left\langle \dfrac{\partial^2\vec\mu^\top}{\partial\theta_i\,\partial\theta_j}C^{-1}(\vec d - \vec\mu)\right\rangle = \dfrac{\partial^2\vec\mu^\top}{\partial\theta_i\,\partial\theta_j}C^{-1}(\vec\mu - \vec\mu) = 0$:
+ 
+$$\Rightarrow \left\langle \frac{\partial^2(\ln\mathcal L)}{\partial\theta_i\,\partial\theta_j}\right\rangle = -\left\langle \frac{\partial\vec\mu^\top}{\partial\theta_i}C^{-1}\frac{\partial\vec\mu}{\partial\theta_j}\right\rangle = -F_{ij}$$
+ 
+### Our case
+ 
+$\theta = p_{\rm NL}$, only one parameter.
+ 
+**Data:** $\vec A = (A_1, \dots, A_K)$, $K$ = number of bins — defined **for one simulation!**
+> example: for ODD_p, simulation 355: $d_8 = A_8 = (\#_+\text{ in bin }8) - (\#_-\text{ in bin }8)$
+ 
+**Model:**
+ 
+$$\langle A_k\rangle(p_{\rm NL}) \approx \alpha_k\,p_{\rm NL}, \qquad \vec\alpha = \frac{\partial\langle\vec A\rangle}{\partial p_{\rm NL}} \quad \text{(response vector)}$$
+ 
+For a matched seed $r$: $A_{p,k}[r] = +\alpha_k P + \eta_k[r]$ and $A_{m,k}[r] = -\alpha_k P + \eta_k[r]$, so
+ 
+$$D_k[r] = A_{p,k}[r] - A_{m,k}[r] = 2\alpha_k P \qquad (N = 500 = \#\text{ seeds})$$
+ 
+$$\Rightarrow \text{per-bin estimator:}\quad \hat\alpha_k = \frac{1}{2P}\,\frac{1}{N}\sum_{r=1}^{N}\big(A_{p,k}[r] - A_{m,k}[r]\big)$$
+ 
+**Covariance estimator:**
+ 
+$$\hat C_{ij} = \frac{1}{N-1}\sum_{r=1}^{N}\big(A^{\rm fid}_i[r] - \bar A_i\big)\big(A^{\rm fid}_j[r] - \bar A_j\big), \qquad \bar A_i = \frac{1}{N}\sum_{r=1}^{N}A^{\rm fid}_i[r]$$
+ 
+but $\hat C^{-1}$ is biased $\Rightarrow$ **Hartlap correction**: $\hat C_{\rm corr}^{-1} = \dfrac{N-K-2}{N-1}\,\hat C^{-1}$ (so we must have $N \gg K$).
+ 
+**Fisher matrix** (here a scalar):
+ 
+$$F = \hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\hat{\vec\alpha}$$
+ 
+$$\Rightarrow \text{constraint:}\quad \sigma(\hat p_{\rm NL}) = \frac{1}{\sqrt F}$$
+ 
+**Best estimator of $p_{\rm NL}$** given a measurement $\vec A_{\rm obs}$:
+ 
+$$\hat p_{\rm NL} = \frac{\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\vec A_{\rm obs}}{\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\hat{\vec\alpha}} = \frac{\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\vec A_{\rm obs}}{F}$$
+ 
+$$\Rightarrow \text{detection iff}\quad \frac{|\hat p_{\rm NL}|}{\sigma(\hat p_{\rm NL})} = \frac{\big|\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\vec A_{\rm obs}\big|}{\sqrt F} \gtrsim 3\text{–}5$$
+ 
+  
+
+
