@@ -1,5 +1,7 @@
-import os, argparse
+import os, argparse, glob
 import numpy as np, pandas as pd
+
+
 
 ap = argparse.ArgumentParser(
     description="Analyze parity data from DIVE runs, binned by tetrahedron radius R (quantiles), and forecast sigma(pNL).",
@@ -16,7 +18,7 @@ SETS = ["ODD_p", "ODD_m", "fiducial"]
 def load(fname):                                   # fast read -> array (N, 2): R, parity
     return pd.read_csv(fname, sep=r"\s+", header=None).to_numpy()
 
-n_real = len(os.listdir(inputdir)) // len(SETS)    # realizations per set
+n_real = len(glob.glob(f"{inputdir}/ODD_p_*_parity.txt"))   # realizations per set
 
 # --- 1. quantile bin edges, from a few sample files ---
 R_sample = np.concatenate([load(f"{inputdir}/fiducial_{r}_parity.txt")[:, 0]
