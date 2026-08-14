@@ -1,8 +1,6 @@
 import os, argparse, glob
 import numpy as np, pandas as pd
 
-
-
 ap = argparse.ArgumentParser(
     description="Analyze parity data from DIVE runs, binned by tetrahedron radius R (quantiles), and forecast sigma(pNL).",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -44,16 +42,16 @@ for s in SETS:
 # --- 3. save for the Fisher analysis later ---
 np.save(f"{inputdir}/edges.npy", edges)
 for s in SETS:
-    np.save(f"{inputdir}/A_{s}.npy", A[s])         # shape (n_real, NB)
-    np.save(f"{inputdir}/T_{s}.npy", T[s])
-print("saved edges.npy, A_<set>.npy (n_real x nbins), T_<set>.npy")
+    np.save(f"{inputdir}/A_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
+    np.save(f"{inputdir}/T_{s}_nb{NB}.npy", T[s])
+print("saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins), T_<set>_nb{NB}.npy")
 
 # --- 4. Fisher forecast: sigma(pNL) ---
 # response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
 alpha = (A["ODD_p"].mean(0) - A["ODD_m"].mean(0)) / (2 * P)     # (NB,)
 
 # covariance from the fiducials only (the noise at pNL=0)
-C = np.cov(A["fiducial"], rowvar=False)                          # (NB, NB)
+C = np.atleast_2d(np.cov(A["fiducial"], rowvar=False))          # (NB, NB), works for NB=1
 Cinv = np.linalg.inv(C)
 
 # Hartlap correction: unbiased inverse covariance (needs n_real >> NB)
