@@ -44,7 +44,7 @@ np.save(f"{inputdir}/edges.npy", edges)
 for s in SETS:
     np.save(f"{inputdir}/A_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
     np.save(f"{inputdir}/T_{s}_nb{NB}.npy", T[s])
-print("saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins), T_<set>_nb{NB}.npy")
+print(f"saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins), T_<set>_nb{NB}.npy")
 
 # --- 4. Fisher forecast: sigma(pNL) ---
 # response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
