@@ -2,14 +2,15 @@ import os, argparse
 import numpy as np, pandas as pd
 
 ap = argparse.ArgumentParser(
-    description="Analyze parity data from DIVE runs, binned by tetrahedron radius R (quantiles).",
+    description="Analyze parity data from DIVE runs, binned by tetrahedron radius R (quantiles), and forecast sigma(pNL).",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 ap.add_argument("-i", "--input", default=".", help="dir with the <set>_<real>_parity.txt files")
 ap.add_argument("-b", "--nbins", type=int, default=20, help="number of R bins (quantiles)")
 ap.add_argument("--nsample", type=int, default=5, help="nb of files used to set the bin edges")
+ap.add_argument("--pNL", type=float, default=1e6, help="|pNL| injected in the ODD sims (P)")
 args = ap.parse_args()
 
-inputdir, NB = args.input, args.nbins
+inputdir, NB, P = args.input, args.nbins, args.pNL
 SETS = ["ODD_p", "ODD_m", "fiducial"]
 
 def load(fname):                                   # fast read -> array (N, 2): R, parity
@@ -44,3 +45,27 @@ for s in SETS:
     np.save(f"{inputdir}/A_{s}.npy", A[s])         # shape (n_real, NB)
     np.save(f"{inputdir}/T_{s}.npy", T[s])
 print("saved edges.npy, A_<set>.npy (n_real x nbins), T_<set>.npy")
+
+# --- 4. Fisher forecast: sigma(pNL) ---
+# response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
+alpha = (A["ODD_p"].mean(0) - A["ODD_m"].mean(0)) / (2 * P)     # (NB,)
+
+# covariance from the fiducials only (the noise at pNL=0)
+C = np.cov(A["fiducial"], rowvar=False)                          # (NB, NB)
+Cinv = np.linalg.inv(C)
+
+# Hartlap correction: unbiased inverse covariance (needs n_real >> NB)
+hartlap = (n_real - NB - 2) / (n_real - 1)
+Cinv *= hartlap
+print(f"Hartlap factor = {hartlap:.3f}   (n_real={n_real}, nbins={NB})")
+
+# Fisher scalar and constraint
+F = alpha @ Cinv @ alpha
+sigma_pNL = 1.0 / np.sqrt(F)
+print(f"F = {F:.4e}")
+print(f"sigma(pNL) = {sigma_pNL:.4e}   (1sigma error on pNL, one box volume)")
+
+# sanity check: recover pNL by feeding the ODD_p mean as the observed vector
+A_obs = A["ODD_p"].mean(0)
+pNL_hat = (alpha @ Cinv @ A_obs) / F
+print(f"check: pNL_hat(ODD_p mean) = {pNL_hat:.3e}   (should be ~+{P:.0e})")
