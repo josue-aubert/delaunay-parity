@@ -245,15 +245,17 @@ F = 2.7575e-16
 sigma(pNL) = 6.0220e+07   (1sigma error on pNL, one box volume)
 check: pNL_hat(ODD_p mean) = 8.170e+05   (should be ~+1e+06)
 
-- With A = N+ - N- and 2 bin :
-
 - With A = N+ - N- and 20 bin :
 Hartlap factor = 0.958   (n_real=500, nbins=20)
 F = 1.3653e-14
 sigma(pNL) = 8.5583e+06   (1sigma error on pNL, one box volume)
 check: pNL_hat(ODD_p mean) = 9.861e+05   (should be ~+1e+06)
-- With A = N+ - N- and 25 bin :
 
+- With A = N+ - N- and 25 bin :
+Hartlap factor = 0.948   (n_real=500, nbins=25)
+F = 1.7582e-14
+sigma(pNL) = 7.5415e+06   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = 1.072e+06   (should be ~+1e+06)
 
 
 
