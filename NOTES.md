@@ -237,6 +237,25 @@ $$\hat p_{\rm NL} = \frac{\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\vec A_{
  
 $$\Rightarrow \text{detection iff}\quad \frac{|\hat p_{\rm NL}|}{\sigma(\hat p_{\rm NL})} = \frac{\big|\hat{\vec\alpha}^\top \hat C_{\rm corr}^{-1}\,\vec A_{\rm obs}\big|}{\sqrt F} \gtrsim 3\text{–}5$$
  
-  
+**Results**
+
+- With A = N+ - N- and 1 bin :
+Hartlap factor = 0.996   (n_real=500, nbins=1)
+F = 2.7575e-16
+sigma(pNL) = 6.0220e+07   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = 8.170e+05   (should be ~+1e+06)
+
+- With A = N+ - N- and 2 bin :
+
+- With A = N+ - N- and 20 bin :
+Hartlap factor = 0.958   (n_real=500, nbins=20)
+F = 1.3653e-14
+sigma(pNL) = 8.5583e+06   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = 9.861e+05   (should be ~+1e+06)
+- With A = N+ - N- and 25 bin :
+
+
+
+
 
 
