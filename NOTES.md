@@ -257,6 +257,12 @@ F = 1.7582e-14
 sigma(pNL) = 7.5415e+06   (1sigma error on pNL, one box volume)
 check: pNL_hat(ODD_p mean) = 1.072e+06   (should be ~+1e+06)
 
+## Monday, August 17
+
+Puisque la statistique A = N+ - N- ne détecte pas la variation de pNL, on essaie une autre, par exemple la somme des parités des tétraèdres plutôt que la somme de leurs signes. 
+
+
+
 
 
 
