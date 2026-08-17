@@ -26,7 +26,7 @@ edges[0], edges[-1] = -np.inf, np.inf              # open outer bins -> catch ev
 print("bin edges (Mpc/h):", np.round(edges, 2))
 
 # --- 2. binned asymmetry for every simulation ---
-A = {s: np.zeros((n_real, NB)) for s in SETS}      # A[s][real, bin] = N+ - N- in that bin
+A = {s: np.zeros((n_real, NB)) for s in SETS}      
 T = {s: np.zeros(n_real) for s in SETS}            # total asymmetry per sim
 
 for s in SETS:

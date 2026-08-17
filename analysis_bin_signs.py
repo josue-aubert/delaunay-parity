@@ -27,24 +27,22 @@ print("bin edges (Mpc/h):", np.round(edges, 2))
 
 # --- 2. binned asymmetry for every simulation ---
 A = {s: np.zeros((n_real, NB)) for s in SETS}      # A[s][real, bin] = N+ - N- in that bin
-T = {s: np.zeros(n_real) for s in SETS}            # total asymmetry per sim
 
 for s in SETS:
     for real in range(n_real):
         d = load(f"{inputdir}/{s}_{real}_parity.txt")
         R, sign = d[:, 0], np.sign(d[:, 1])
-        T[s][real] = sign.sum()
         b = np.digitize(R, edges)                  # bin index 1..NB for each tetrahedron
         for k in range(1, NB + 1):
             A[s][real, k - 1] = sign[b == k].sum()
-        print(f"{s} {real}: T = {T[s][real]:.0f}", flush=True)
+        A[s][real] /= d.shape[0]          # normalize by the number of tetrahedra in that sim
+    print(f"{s} done", flush=True)
 
 # --- 3. save for the Fisher analysis later ---
 np.save(f"{inputdir}/edges.npy", edges)
 for s in SETS:
     np.save(f"{inputdir}/A_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
-    np.save(f"{inputdir}/T_{s}_nb{NB}.npy", T[s])
-print(f"saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins), T_<set>_nb{NB}.npy")
+print(f"saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins)")
 
 # --- 4. Fisher forecast: sigma(pNL) ---
 # response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
