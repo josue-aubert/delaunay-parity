@@ -276,6 +276,51 @@ check: pNL_hat(ODD_p mean) = 9.057e+05   (should be ~+1e+06)
 
 So it's worse than the signs. 
 
+## Monday, August 17
+
+Since the statistic `A = N+ - N-` does not detect the variation of pNL, I try alternatives.
+
+- **Sum of parities instead of sum of signs.** Created a new analysis script `analysis_bin_parities.py` (sum of the tetrahedra parities rather than their signs), and renamed the old one to `analysis_bin_signs.py`.
+
+  T = sum of each tetrahedron's parity, **1 bin**:
+```
+  Hartlap factor = 0.996   (n_real=500, nbins=1)
+  F = 3.9991e-16
+  sigma(pNL) = 5.0006e+07   (1sigma error on pNL, one box volume)
+  check: pNL_hat(ODD_p mean) = -7.621e+05   (should be ~+1e+06)
+```
+  T = sum of each tetrahedron's parity, **25 bins**:
+```
+  Hartlap factor = 0.948   (n_real=500, nbins=25)
+  F = 1.4654e-14
+  sigma(pNL) = 8.2609e+06   (1sigma error on pNL, one box volume)
+  check: pNL_hat(ODD_p mean) = 9.057e+05   (should be ~+1e+06)
+```
+  → worse than the signs.
+
+- **Normalized statistic** `A = (N+ - N-)/N_tet`.
+
+  1 bin:
+```
+  Hartlap factor = 0.996   (n_real=500, nbins=1)
+  F = 2.7488e-16
+  sigma(pNL) = 6.0315e+07   (1sigma error on pNL, one box volume)
+  check: pNL_hat(ODD_p mean) = 8.155e+05   (should be ~+1e+06)
+```
+  25 bins:
+```
+  Hartlap factor = 0.948   (n_real=500, nbins=25)
+  F = 1.7605e-14
+  sigma(pNL) = 7.5367e+06   (1sigma error on pNL, one box volume)
+  check: pNL_hat(ODD_p mean) = 1.071e+06   (should be ~+1e+06)
+```
+  → sigma(pNL) = 7.5367e+06 instead of 7.5415e+06: slightly better, but negligible.
+
+- Added a way to store the results and the bin edges in `analysis_bin_signs.py`.
+- Added a script to plot `A(R)` (R = circumsphere radius of the tetrahedra) for the
+  different cosmologies — a histogram, since R is binned.
+
+**Next steps (tomorrow):** define a new statistic based on the *shape* of the tetrahedra rather than just their parity, and find a way to also recover the total mass of each tetrahedron in order to weight the statistic.
 
 
 
