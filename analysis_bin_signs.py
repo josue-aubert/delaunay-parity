@@ -31,11 +31,9 @@ A = {s: np.zeros((n_real, NB)) for s in SETS}      # A[s][real, bin] = N+ - N- i
 for s in SETS:
     for real in range(n_real):
         d = load(f"{inputdir}/{s}_{real}_parity.txt")
-        R, sign = d[:, 0], np.sign(d[:, 1])
-        b = np.digitize(R, edges)                  # bin index 1..NB for each tetrahedron
-        for k in range(1, NB + 1):
-            A[s][real, k - 1] = sign[b == k].sum()
-        A[s][real] /= d.shape[0]          # normalize by the number of tetrahedra in that sim
+        sign = np.sign(d[:, 1])
+        b = np.digitize(d[:, 0], edges) - 1                 # 0..NB-1
+        A[s][real] = np.bincount(b, weights=sign, minlength=NB)[:NB] / d.shape[0]
         print(f"{s} {real}: done", flush=True)
     print(f"{s} done", flush=True)
 
