@@ -38,10 +38,10 @@ for s in SETS:
     print(f"{s} done", flush=True)
 
 # --- 3. save for the Fisher analysis later ---
-np.save(f"{inputdir}/edges.npy", edges)
+np.save(f"{inputdir}/edges_signs_nb{NB}.npy", edges)
 for s in SETS:
-    np.save(f"{inputdir}/A_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
-print(f"saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins)")
+    np.save(f"{inputdir}/A_signs_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
+print(f"saved edges_signs_nb{NB}.npy, A_signs_<set>_nb{NB}.npy (n_real x nbins)")
 
 # --- 4. Fisher forecast: sigma(pNL) ---
 # response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
