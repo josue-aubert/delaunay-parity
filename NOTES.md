@@ -15,7 +15,7 @@
 We need a definition of parity on the 4 points (galaxies) of a tetrahedron such that: it flips sign under a parity transformation, it does not depend on the observer's position, and it is invariant under rotation → the **scalar triple product**.
 
 **Definition (this work):**
-- For each vertex, sum the (squared, for simplicity) lengths of its three edges, and use this to order the vertices in **increasing** order. `r0` is the vertex with the smallest edge-length sum, etc.
+- For each vertex, sum the (squared, for simplicity) lengths of its three edges, and use this to order the vertices in **increasing** order. `r0` is the position of the vertex with the smallest (squared) edge-length sum, etc.
 - Define `s_i = r_i - r_0`.
 - The parity observable is the triple product `(s_1 × s_2) · s_3` (a pseudoscalar), equal to `det(s_1, s_2, s_3)`.
 
@@ -260,8 +260,21 @@ check: pNL_hat(ODD_p mean) = 1.072e+06   (should be ~+1e+06)
 ## Monday, August 17
 
 Puisque la statistique A = N+ - N- ne détecte pas la variation de pNL, on essaie une autre, par exemple la somme des parités des tétraèdres plutôt que la somme de leurs signes. 
+- Créé un nouveau script d'analyse nommé analysis_bin_parities.py pour la somme des parités plutôt que la somme des signes des parités, et renommer l'ancien script en analysis_bin_signs.py.
 
+- With T sum of each tetrahedra parities and 1 bin :
+Hartlap factor = 0.996   (n_real=500, nbins=1)
+F = 3.9991e-16
+sigma(pNL) = 5.0006e+07   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = -7.621e+05   (should be ~+1e+06)
 
+- With T sum of each tetrahedra parities and 25 bins :
+Hartlap factor = 0.948   (n_real=500, nbins=25)
+F = 1.4654e-14
+sigma(pNL) = 8.2609e+06   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = 9.057e+05   (should be ~+1e+06)
+
+So it's worse than the signs. 
 
 
 
