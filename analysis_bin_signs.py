@@ -36,6 +36,7 @@ for s in SETS:
         for k in range(1, NB + 1):
             A[s][real, k - 1] = sign[b == k].sum()
         A[s][real] /= d.shape[0]          # normalize by the number of tetrahedra in that sim
+        print(f"{s} {real}: done", flush=True)
     print(f"{s} done", flush=True)
 
 # --- 3. save for the Fisher analysis later ---
