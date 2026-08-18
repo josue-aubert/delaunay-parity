@@ -8,9 +8,9 @@ ap = argparse.ArgumentParser(
 ap.add_argument("-i", "--input",  default=".",            help="dir with ODD_p/ ODD_m/ fiducial/")
 ap.add_argument("-d", "--dive",   default="./DIVE",       help="path to the DIVE executable")
 ap.add_argument("-o", "--output", default="./parity_out", help="output directory")
-ap.add_argument("-s", "--start", type=int, default=0,   help="first realization (inclusive)")
-ap.add_argument("-e", "--end",   type=int, default=500, help="last realization (exclusive)")
-ap.add_argument("--mmin", type=float, default=0.0, help="minimum halo mass in Msun/h (0 = no cut)")
+ap.add_argument("-s", "--start", type=int,   default=0,   help="first realization (inclusive)")
+ap.add_argument("-e", "--end",   type=int,   default=500, help="last realization (exclusive)")
+ap.add_argument("-m", "--mmin",        type=float, default=0.0, help="minimum halo mass in Msun/h (0 = no cut)")
 args = ap.parse_args()
 
 BASE, DIVE, OUT, MMIN = args.input, args.dive, args.output, args.mmin
