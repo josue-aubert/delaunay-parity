@@ -1,4 +1,4 @@
-# Project log — Delaunay-parity
+<img width="1050" height="675" alt="image" src="https://github.com/user-attachments/assets/684394c6-484b-4599-a1d5-3b5ace46538d" /># Project log — Delaunay-parity
 
 ## Monday, August 10
 
