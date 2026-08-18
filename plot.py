@@ -27,13 +27,26 @@ for s in SETS:
     err  = A.std(0) / np.sqrt(A.shape[0])                # error on the mean
     plt.errorbar(centers, mean, yerr=err, label=LABELS[s],
                  color=COLORS[s], marker="o", ms=4, capsize=2, lw=1.3)
+    
+if method == "shapes":
+    plt.axhline(0, color="k", lw=0.8, ls="--")
+    plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
+    plt.ylabel(r"$Sum(A)/N_{\rm tet}$  per bin")
+    plt.title(f" Summed chirality shapes bins vs scale  ({NB} R-bins)")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f"./A_of_R_{method}_nb{NB}.png", dpi=150)
+    plt.show()
+    print(f"saved A_of_R_nb{NB}.png")
+    
+if method == "signs":
+    plt.axhline(0, color="k", lw=0.8, ls="--")
+    plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
+    plt.ylabel(r"$(N_+ - N_-)/N_{\rm tet}$  per bin")
+    plt.title(f"Summed parity signs over bins vs scale  ({NB} R-bins)")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f"./A_of_R_{method}_nb{NB}.png", dpi=150)
+    plt.show()
+    print(f"saved A_of_R_nb{NB}.png")
 
-plt.axhline(0, color="k", lw=0.8, ls="--")
-plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
-plt.ylabel(r"$Sum(A)/N_{\rm tet}$  per bin")
-plt.title(f" Summed chirality shapes bins vs scale  ({NB} R-bins)")
-plt.legend()
-plt.tight_layout()
-plt.savefig(f"./A_of_R_{method}_nb{NB}.png", dpi=150)
-plt.show()
-print(f"saved A_of_R_nb{NB}.png")
