@@ -37,7 +37,7 @@ if method == "shapes":
     plt.tight_layout()
     plt.savefig(f"./A_of_R_{method}_nb{NB}.png", dpi=150)
     plt.show()
-    print(f"saved A_of_R_nb{NB}.png")
+    print(f"saved A_of_R_{method}_nb{NB}.png")
     
 if method == "signs":
     plt.axhline(0, color="k", lw=0.8, ls="--")
@@ -48,5 +48,5 @@ if method == "signs":
     plt.tight_layout()
     plt.savefig(f"./A_of_R_{method}_nb{NB}.png", dpi=150)
     plt.show()
-    print(f"saved A_of_R_nb{NB}.png")
+    print(f"saved A_of_R_{method}_nb{NB}.png")
 
