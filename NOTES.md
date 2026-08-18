@@ -305,16 +305,34 @@ Since the statistic `A = N+ - N-` does not detect the variation of pNL, I try al
 
 ## Tuesday, August 18
 
-- Modifié DIVE pour qu'il rajoute une troisième colonne au fichiers textes de sortie : la chirality shape, soit le volume signé (la parité comme définie avant) divisée par la somme des longueurs des cotés du tétraèdre depuis le sommet défini comme référence : des(s_1, s_2, s_3) / (|s_1| * |s_2| * |s_3|) / (Nombre de tétraèdres dans cette sim
-- Lancé le script sur les 1500 simulations pour récrire la colonne chirality shape, parallélisme sur 25 coeurs comme la semaine passée.
-- Créé un script python pour l'analyse des résultats avec shapes et adapté le script de plot. Résultat:
+- Modified DIVE to add a third column to the output text files: the **chirality shape**,
+  i.e. the signed volume (the parity as defined before) divided by the **product** of the
+  three edge lengths from the reference vertex: `det(s_1, s_2, s_3) / (|s_1|·|s_2|·|s_3|)`,
+  which lies in `[-1, 1]`. (The extra `/N_tet` normalization is applied later, in the
+  analysis, not in DIVE.)
+- Ran the script on the 1500 simulations to write the new chirality-shape column,
+  parallelized over 25 cores as last week.
+- Wrote a Python analysis script for the shape statistic and adapted the plot script.
+  Result (25 bins):
 ```
 Hartlap factor = 0.948   (n_real=500, nbins=25)
 F = 1.5940e-14
 sigma(pNL) = 7.9206e+06   (1sigma error on pNL, one box volume)
 check: pNL_hat(ODD_p mean) = 1.110e+06   (should be ~+1e+06)
 ```
-Soit comparable mais meme un peu pire  à ce qu'on obtenait avant...
+  So comparable to — even slightly worse than — what we had before.
 
 ![A(R) — shape statistic](A_of_R_shapes_nb25.png)
+
+- Plotted `A(R)` for both statistics with 10 bins (signs and shapes). They show the
+  **same general trends** — the shape statistic doesn't bring anything qualitatively new:
+
+![A(R) — shapes (10 bins)](A_of_R_shapes_nb10.png)
+![A(R) — signs (10 bins)](A_of_R_signs_nb10.png)
+
+- Since none of these clearly beats the baseline, we still want to try a **mass cut**.
+  Created `extract_halos.py` with a `--mmin` argument to drop halos below
+  `3e13` Msun/h, and re-ran the whole pipeline on the 1500 simulations. Motivated by
+  Coulton et al. (2023, §V.E), who find a parity signal in the angular momentum of
+  massive halos (`M > 3×10^13` h⁻¹ M⊙).
 
