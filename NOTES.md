@@ -119,7 +119,7 @@ it stitches the sub-files automatically), extracted halo positions
 - Modified the parity script so it can take `--start` and `--end` indices defining which
   realizations to process, and parallelized the work on the server across 25 cores. The
   full run (500 of each set, 1500 simulations) took about 2h20min:
-
+```
     for c in $(seq 0 20 499); do
       end=$((c+20))
       python first_test_server.py -i /data/users/czhao/Quijote/Halos/FoF \
@@ -128,6 +128,8 @@ it stitches the sub-files automatically), extracted halo positions
     done
     wait
     echo "ALL DONE"
+```
+
 - Optimized `analysis.py` using `pd.read_csv(...).to_numpy()` instead of `np.loadtxt`
   (one read per file): analysis of the 1500 files dropped from a few hours to ~13 min.
 
