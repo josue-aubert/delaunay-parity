@@ -34,7 +34,7 @@ for s in SETS:
         R = d[:, 0]
         b = np.digitize(R, edges)                  # bin index 1..NB
         for k in range(1, NB + 1):
-            A[s][real, k - 1] = d[b == k, 2].sum()  # col 2 = p_norm (shape)
+            A[s][real, k - 1] = d[b == k, 2].sum() / d.shape[0]  # col 2 = p_norm (shape)
         print(f"{s} {real} done", flush=True)          
 
 # --- 3. save for the Fisher analysis later ---
