@@ -18,3 +18,7 @@ fiducial_10825a/
 fiducial/
 ODD_m/
 ODD_p/
+
+# Images 
+.png
+.jpeg

@@ -28,11 +28,11 @@ for s in SETS:
                  color=COLORS[s], marker="o", ms=4, capsize=2, lw=1.3)
 
 plt.axhline(0, color="k", lw=0.8, ls="--")
-plt.xlabel(r"circumsphere radius  $R$  [Mpc/$h$]")
+plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
 plt.ylabel(r"$A(R) = (N_+ - N_-)/N_{\rm tet}$  per bin")
 plt.title(f"Parity asymmetry vs scale  ({NB} R-bins)")
 plt.legend()
 plt.tight_layout()
-plt.savefig(f"{inputdir}/A_of_R_nb{NB}.png", dpi=150)
+plt.savefig(f"./A_of_R_nb{NB}.png", dpi=150)
 plt.show()
 print(f"saved A_of_R_nb{NB}.png")
