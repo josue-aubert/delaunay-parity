@@ -13,8 +13,8 @@ args = ap.parse_args()
 inputdir, NB, P = args.input, args.nbins, args.pNL
 SETS = ["ODD_p", "ODD_m", "fiducial"]
 
-def load(fname):                                   # fast read -> array (N, 2): R, parity
-    return pd.read_csv(fname, sep=r"\s+", header=None).to_numpy()
+def load(fname):                                   # -> (N, 2): R, p_norm only
+    return pd.read_csv(fname, sep=r"\s+", header=None, usecols=[0, 2], dtype=np.float32).to_numpy()
 
 n_real = len(glob.glob(f"{inputdir}/ODD_p_*_parity.txt"))   # realizations per set
 
@@ -31,10 +31,8 @@ A = {s: np.zeros((n_real, NB)) for s in SETS}      # A[s][real, bin] = sum of sh
 for s in SETS:
     for real in range(n_real):
         d = load(f"{inputdir}/{s}_{real}_parity.txt")
-        R = d[:, 0]
-        b = np.digitize(R, edges)                  # bin index 1..NB
-        for k in range(1, NB + 1):
-            A[s][real, k - 1] = d[b == k, 2].sum() / d.shape[0]  # col 2 = p_norm (shape)
+        b = np.digitize(d[:, 0], edges) - 1                          # 0...NB-1
+        A[s][real] = np.bincount(b, weights=d[:, 1], minlength=NB)[:NB] / d.shape[0]
         print(f"{s} {real} done", flush=True)          
 
 # --- 3. save for the Fisher analysis later ---
