@@ -35,7 +35,7 @@ for s in SETS:
         b = np.digitize(R, edges)                  # bin index 1..NB
         for k in range(1, NB + 1):
             A[s][real, k - 1] = d[b == k, 2].sum()  # col 2 = p_norm (shape)
-    print(f"{s} done", flush=True)          
+        print(f"{s} {real} done", flush=True)          
 
 # --- 3. save for the Fisher analysis later ---
 np.save(f"{inputdir}/edges_shapes_nb{NB}.npy", edges)
