@@ -301,12 +301,20 @@ Since the statistic `A = N+ - N-` does not detect the variation of pNL, I try al
 - Added a script to plot `A(R)` (R = circumsphere radius of the tetrahedra) for the
   different cosmologies.
 
-**Next steps (tomorrow):** define a new statistic based on the *shape* of the tetrahedra rather than just their parity, and find a way to also recover the total mass of each tetrahedron in order to weight the statistic.
+![A(R) — sign statistic](A_of_R_signs_nb25.png)
 
 ## Tuesday, August 18
 
-- Modifié DIVE pour qu'il rajoute une troisième colonne au fichiers textes de sortie : la chirality shape, soit le volume signé (la parité comme définie avant) divisée par la somme des longueurs des cotés du tétraèdre depuis le sommet défini comme référence : des(s_1, s_2, s_3)/(|s_1| * |s_2| * |s_3|)
-- 
+- Modifié DIVE pour qu'il rajoute une troisième colonne au fichiers textes de sortie : la chirality shape, soit le volume signé (la parité comme définie avant) divisée par la somme des longueurs des cotés du tétraèdre depuis le sommet défini comme référence : des(s_1, s_2, s_3) / (|s_1| * |s_2| * |s_3|) / (Nombre de tétraèdres dans cette sim
+- Lancé le script sur les 1500 simulations pour récrire la colonne chirality shape, parallélisme sur 25 coeurs comme la semaine passée.
+- Créé un script python pour l'analyse des résultats avec shapes et adapté le script de plot. Résultat:
+```
+Hartlap factor = 0.948   (n_real=500, nbins=25)
+F = 1.5940e-14
+sigma(pNL) = 7.9206e+06   (1sigma error on pNL, one box volume)
+check: pNL_hat(ODD_p mean) = 1.110e+06   (should be ~+1e+06)
+```
+Soit comparable mais meme un peu pire  à ce qu'on obtenait avant...
 
-
+![A(R) — shape statistic](A_of_R_shapes_nb25.png)
 
