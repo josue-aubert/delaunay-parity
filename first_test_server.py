@@ -27,7 +27,7 @@ for s, snap in SNAP.items():
         tmp_full = f"{OUT}/full_{s}_{real}.txt"
         np.savetxt(tmp_pos, pos, fmt="%.6f")
         subprocess.run([DIVE, "-i", tmp_pos, "-o", tmp_full, "-u", "1000"], check=True)
-        Rp = pd.read_csv(tmp_full, sep=r"\s+", header=None, usecols=[3, 4]).to_numpy()
+        Rp = pd.read_csv(tmp_full, sep=r"\s+", header=None, usecols=[3, 4, 5]).to_numpy()
         out = f"{OUT}/{s}_{real}_parity.txt"
         np.savetxt(out, Rp, fmt="%.6g")
         os.remove(tmp_pos); os.remove(tmp_full)
