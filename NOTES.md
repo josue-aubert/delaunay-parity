@@ -1,5 +1,3 @@
-<img width="1050" height="675" alt="image" src="https://github.com/user-attachments/assets/684394c6-484b-4599-a1d5-3b5ace46538d" /># Project log — Delaunay-parity
-
 ## Monday, August 10
 
 - **Set up the `delaunay-parity` repo** on my machine (with a `README` and a `.gitignore`), linked my SSH key to my GitHub account, then:
@@ -259,28 +257,9 @@ check: pNL_hat(ODD_p mean) = 1.072e+06   (should be ~+1e+06)
 
 ## Monday, August 17
 
-Puisque la statistique A = N+ - N- ne détecte pas la variation de pNL, on essaie une autre, par exemple la somme des parités des tétraèdres plutôt que la somme de leurs signes. 
-- Créé un nouveau script d'analyse nommé analysis_bin_parities.py pour la somme des parités plutôt que la somme des signes des parités, et renommer l'ancien script en analysis_bin_signs.py.
-
-- With T sum of each tetrahedra parities and 1 bin :
-Hartlap factor = 0.996   (n_real=500, nbins=1)
-F = 3.9991e-16
-sigma(pNL) = 5.0006e+07   (1sigma error on pNL, one box volume)
-check: pNL_hat(ODD_p mean) = -7.621e+05   (should be ~+1e+06)
-
-- With T sum of each tetrahedra parities and 25 bins :
-Hartlap factor = 0.948   (n_real=500, nbins=25)
-F = 1.4654e-14
-sigma(pNL) = 8.2609e+06   (1sigma error on pNL, one box volume)
-check: pNL_hat(ODD_p mean) = 9.057e+05   (should be ~+1e+06)
-
-So it's worse than the signs. 
-
-## Monday, August 17
-
 Since the statistic `A = N+ - N-` does not detect the variation of pNL, I try alternatives.
 
-- **Sum of parities instead of sum of signs.** Created a new analysis script `analysis_bin_parities.py` (sum of the tetrahedra parities rather than their signs), and renamed the old one to `analysis_bin_signs.py`.
+- **Sum of parities (signed volumes) instead of sum of signs.** Created a new analysis script `analysis_bin_parities.py` (sum of the tetrahedra parities rather than their signs), and renamed the old one to `analysis_bin_signs.py`.
 
   T = sum of each tetrahedron's parity, **1 bin**:
 ```
@@ -318,10 +297,14 @@ Since the statistic `A = N+ - N-` does not detect the variation of pNL, I try al
 
 - Added a way to store the results and the bin edges in `analysis_bin_signs.py`.
 - Added a script to plot `A(R)` (R = circumsphere radius of the tetrahedra) for the
-  different cosmologies — a histogram, since R is binned.
+  different cosmologies.
 
 **Next steps (tomorrow):** define a new statistic based on the *shape* of the tetrahedra rather than just their parity, and find a way to also recover the total mass of each tetrahedron in order to weight the statistic.
 
+## Tuesday, August 18
+
+- Modifié DIVE pour qu'il rajoute une troisième colonne au fichiers textes de sortie : la chirality shape, soit le volume signé (la parité comme définie avant) divisée par la somme des longueurs des cotés du tétraèdre depuis le sommet défini comme référence : des(s_1, s_2, s_3)/(|s_1| * |s_2| * |s_3|)
+- 
 
 
 
