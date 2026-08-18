@@ -4,10 +4,9 @@ import numpy as np, matplotlib.pyplot as plt
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--input", default=".")
 ap.add_argument("-b", "--nbins", type=int, default=20)
+ap.add_argument("-m", "--method", default="shapes", choices=["signs", "shapes"])
 args = ap.parse_args()
-inputdir, NB = args.input, args.nbins
-
-method = "shapes"  # "signs" or "shapes"
+inputdir, NB, method = args.input, args.nbins, args.method  
 
 SETS   = ["ODD_p", "ODD_m", "fiducial"]
 LABELS = {"ODD_p": r"$p_{\rm NL}=+10^6$", "ODD_m": r"$p_{\rm NL}=-10^6$", "fiducial": r"$p_{\rm NL}=0$"}
