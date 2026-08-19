@@ -70,6 +70,12 @@ D = A["ODD_p"] - A["ODD_m"]                 # (n_real, NB), paired seed
 mean_D = D.mean(0)                          # ~ 2*alpha*P (signal)
 C_D = np.atleast_2d(np.cov(D, rowvar=False))# Covariance of D : cosmical variance cancelled (noise only)
 CDinv = np.linalg.inv(C_D) * hartlap        # (Hartlap)
-
 significance = np.sqrt(n_real * (mean_D @ CDinv @ mean_D))
 print(f"paired detection significance = {significance:.1f} sigma (cosmic variance cancelled)")
+
+# --- Per-bin significance (directly comparable to Coulton's "up to 40 sigma in the mean") ---
+err_D = D.std(0, ddof=1) / np.sqrt(n_real)   # error on the mean, per bin
+sig_bin = mean_D / err_D                      # (NB,) significance in each bin
+kbest = np.argmax(np.abs(sig_bin))
+print("per-bin significance (sigma):", np.round(sig_bin, 1))
+print(f"best single bin: |sig| = {np.abs(sig_bin[kbest]):.1f} sigma (bin {kbest})")
