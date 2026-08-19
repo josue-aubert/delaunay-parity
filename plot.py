@@ -30,7 +30,8 @@ snr    = mean_D / err_D                       # SNR in each bin
 
 # --- plot ---
 plt.figure(figsize=(7, 4.5))
-plt.axhline(0, color="k", lw=0.8, ls="--")
+plt.axhline(1, color="k", lw=0.8, ls="--")
+plt.axhline(-1, color="k", lw=0.8, ls="--")
 plt.plot(centers, snr, "o-", color="C3", lw=1.3, ms=5)
 plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
 plt.ylabel(r"SNR $= \langle A_+ - A_- \rangle \, / \, \sigma$")
