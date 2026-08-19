@@ -338,21 +338,20 @@ check: pNL_hat(ODD_p mean) = 1.110e+06   (should be ~+1e+06)
 
 ## Wednesday, August 19
 
-- Since all attempts remain unsuccessful so far, we try selecting only the more
+- Since all attempts remain unsuccessful so far, try selecting only the more
   massive halos (mass cut), inspired by what was done in *Signatures of a
-  Parity-Violating Universe* (Coulton, Philcox & Villaescusa-Navarro 2023) — though
-  for a different part of their analysis (§V.E, halo angular momenta), not for the
+  Parity-Violating Universe* (Coulton, Philcox & Villaescusa-Navarro 2023) though
+  for a different part of their analysis (§V.E, halo angular momenta) not for the
   same statistic. Result:
 ```
   Hartlap factor = 0.948   (n_real=500, nbins=25)
   F = 1.5477e-14
   sigma(pNL) = 8.0382e+06   (1sigma error on pNL, one box volume)
   check: pNL_hat(ODD_p mean) = 1.637e+06   (should be ~+1e+06)
-  -> Worse.
 ```
+So it's just worse. 
 
-- We now plot the **Signal-to-Noise Ratio (SNR) per bin**. Following Coulton et al.,
-  we define the paired difference $\Delta A = A(p_{\rm NL}=+10^6) - A(p_{\rm NL}=-10^6)$
+- Now plot the **Signal-to-Noise Ratio (SNR) per bin**. Define the paired difference $\Delta A = A(p_{\rm NL}=+10^6) - A(p_{\rm NL}=-10^6)$
   (same seed, which cancels most of the cosmic variance) and
   $\text{SNR} = \Delta A / \sigma_{\Delta A}$, where the mean is taken over the
   simulations in each bin. Adapted `plot.py` accordingly. First results for the
@@ -361,15 +360,11 @@ check: pNL_hat(ODD_p mean) = 1.110e+06   (should be ~+1e+06)
 ![Per-bin paired SNR — signs statistic](SNR_of_R_signs_nb25.png)
 ![Per-bin paired SNR — shapes statistic](SNR_of_R_shapes_nb25.png)
 
-  Each bin is one degree of freedom, so a point at $\pm2$ is a genuine $2\sigma$.
-  The points stay within the noise band → consistent with no clear detection in a
-  single R-binning, which motivates resolving the tetrahedron shape (next point).
 
 - Modified `DIVE.cpp` so it outputs a `.txt` with **4 columns**: the chirality first,
   then the **sorted lengths of the 3 edges** from the reference vertex $r_0$ defined
   earlier. This will let us bin by tetrahedron shape (the three side lengths) instead
-  of only by R — i.e. the $\mathcal{P}_{111}$ coefficient of the parity-odd 4PCF
-  resolved in $(r_1, r_2, r_3)$.
+  of only by R.
 
 - Modified `extract_halos.py` to read these 4 columns per simulation and save a
   `.npy` instead of a `.txt` (smaller on disk, and much faster to read since there is
