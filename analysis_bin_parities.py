@@ -40,11 +40,10 @@ for s in SETS:
         print(f"{s} {real}: T = {T[s][real]:.0f}", flush=True)
 
 # --- 3. save for the Fisher analysis later ---
-np.save(f"{inputdir}/edges.npy", edges)
+np.save(f"{inputdir}/edges_parities_nb{NB}.npy", edges)
 for s in SETS:
-    np.save(f"{inputdir}/A_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
-    np.save(f"{inputdir}/T_{s}_nb{NB}.npy", T[s])
-print(f"saved edges.npy, A_<set>_nb{NB}.npy (n_real x nbins), T_<set>_nb{NB}.npy")
+    np.save(f"{inputdir}/A_parities_{s}_nb{NB}.npy", A[s])         # shape (n_real, NB)
+print(f"saved edges_parities_nb{NB}.npy, A_parities_<set>_nb{NB}.npy (n_real x nbins)")
 
 # --- 4. Fisher forecast: sigma(pNL) ---
 # response vector: alpha_k = <A_p - A_m> / (2P)   (paired-seed estimator)
@@ -69,3 +68,12 @@ print(f"sigma(pNL) = {sigma_pNL:.4e}   (1sigma error on pNL, one box volume)")
 A_obs = A["ODD_p"].mean(0)
 pNL_hat = (alpha @ Cinv @ A_obs) / F
 print(f"check: pNL_hat(ODD_p mean) = {pNL_hat:.3e}   (should be ~+{P:.0e})")
+
+# --- Paired detection significance (Coulton) ---
+D = A["ODD_p"] - A["ODD_m"]                  # (n_real, NB), paired seed
+mean_D = D.mean(0)                           # ~ 2*alpha*P (signal)
+C_D = np.atleast_2d(np.cov(D, rowvar=False)) # covariance of D: cosmic variance cancelled (noise only)
+CDinv = np.linalg.inv(C_D) * hartlap         # (Hartlap)
+
+significance = np.sqrt(n_real * (mean_D @ CDinv @ mean_D))
+print(f"paired detection significance = {significance:.1f} sigma (cosmic variance cancelled)")

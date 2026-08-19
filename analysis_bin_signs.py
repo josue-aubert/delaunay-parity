@@ -67,12 +67,11 @@ A_obs = A["ODD_p"].mean(0)
 pNL_hat = (alpha @ Cinv @ A_obs) / F
 print(f"check: pNL_hat(ODD_p mean) = {pNL_hat:.3e}   (should be ~+{P:.0e})")
 
-# --- significativité appariée (variance cosmique annulée, à la Coulton) ---
-D = A["ODD_p"] - A["ODD_m"]                 # (n_real, NB), différence à seed apparié
-mean_D = D.mean(0)                          # ~ 2*alpha*P (le signal)
-C_D = np.atleast_2d(np.cov(D, rowvar=False))# covariance de D : variance cosmique annulée
-CDinv = np.linalg.inv(C_D) * hartlap        # (même correction de Hartlap)
+# --- Paired  detection significance(Coulton) ---
+D = A["ODD_p"] - A["ODD_m"]                 # (n_real, NB), paired seed
+mean_D = D.mean(0)                          # ~ 2*alpha*P (signal)
+C_D = np.atleast_2d(np.cov(D, rowvar=False))# Covariance of D : cosmical variance cancelled (noise only)
+CDinv = np.linalg.inv(C_D) * hartlap        # (Hartlap)
 
-# significativité de détection du signal de parité dans la suite de 500 sims :
 significance = np.sqrt(n_real * (mean_D @ CDinv @ mean_D))
 print(f"paired detection significance = {significance:.1f} sigma (cosmic variance cancelled)")
