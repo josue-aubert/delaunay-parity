@@ -1,5 +1,5 @@
 import os, argparse, glob
-import numpy as np, pandas as pd
+import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
 ap = argparse.ArgumentParser(
     description="Analyze parity data from DIVE runs, binned by tetrahedron radius R (quantiles), and forecast sigma(pNL).",
@@ -66,3 +66,26 @@ print(f"sigma(pNL) = {sigma_pNL:.4e}   (1sigma error on pNL, one box volume)")
 A_obs = A["ODD_p"].mean(0)
 pNL_hat = (alpha @ Cinv @ A_obs) / F
 print(f"check: pNL_hat(ODD_p mean) = {pNL_hat:.3e}   (should be ~+{P:.0e})")
+
+# paired difference, per seed
+D = A["ODD_p"] - A["ODD_m"]                      # (n_real, NB)
+mean_D = D.mean(0)                               # mean over the 500 sims, per bin
+err_D  = D.std(0, ddof=1) / np.sqrt(n_real)      # error on the mean, per bin
+snr = mean_D / err_D                             # SNR in each bin (cosmic variance cancelled)
+
+# R bin centers from the quantile edges (fix the +/-inf outer edges by extrapolation)
+fin = edges.copy()
+fin[0]  = fin[1]  - (fin[2]  - fin[1])
+fin[-1] = fin[-2] + (fin[-2] - fin[-3])
+centers = 0.5 * (fin[:-1] + fin[1:])             # (NB,)
+
+# plot
+plt.figure(figsize=(7, 4.5))
+plt.axhline(0, color="k", lw=0.8, ls="--")
+plt.plot(centers, snr, "o-", color="C3", lw=1.3, ms=5)
+plt.xlabel(r"Circumsphere radius  $R$  [Mpc/$h$]")
+plt.ylabel(r"SNR $= \langle A_+ - A_- \rangle \, / \, \sigma$")
+plt.title(f"Per-bin paired SNR — signs statistic ({NB} R-bins)")
+plt.tight_layout()
+plt.savefig(f"./SNR_of_R_signs_nb{NB}.png", dpi=150)
+print(f"saved SNR_of_R_signs_nb{NB}.png")
