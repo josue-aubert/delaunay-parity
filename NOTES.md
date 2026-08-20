@@ -372,3 +372,35 @@ So it's just worse.
 
 - Ran the pipeline to build the 1500 `.npy` files, parallelized over 25 cores on a
   tmux session, as done several times before.
+
+## Thursday, August 20
+
+- Bin by the **edge-length ratios** of the three sides from $r_0$ ($l_1 \le l_2 \le l_3$). Created two analysis
+  scripts (one for the **signs** statistic, one for the **shapes** statistic), each producing **6 plots**:
+  - 3 **1D** line plots — per-bin paired SNR vs a single ratio: $l_1/l_2$, $l_1/l_3$, $l_2/l_3$;
+  - 3 **2D** heatmaps — per-cell paired SNR binned by a pair of ratios: $(l_1/l_2, l_1/l_3)$, $(l_1/l_2, l_2/l_3)$, $(l_1/l_3, l_2/l_3)$.
+
+  SNR is the paired difference normalized by the error on the mean,
+  $\text{SNR} = \overline{\Delta A}/\sigma_{\overline{\Delta A}}$, one degree of freedom per bin/cell.
+
+**Signs statistic:**
+
+![signs — SNR vs l1/l2](SNR_signs_l1l2_nb20.png)
+![signs — SNR vs l1/l3](SNR_signs_l1l3_nb20.png)
+![signs — SNR vs l2/l3](SNR_signs_l2l3_nb20.png)
+![signs — SNR (l1/l2, l1/l3)](SNR_signs_l1l2_l1l3_nb20.png)
+![signs — SNR (l1/l2, l2/l3)](SNR_signs_l1l2_l2l3_nb20.png)
+![signs — SNR (l1/l3, l2/l3)](SNR_signs_l1l3_l2l3_nb20.png)
+
+**Shapes statistic:**
+
+![shapes — SNR vs l1/l2](SNR_shapes_l1l2_nb20.png)
+![shapes — SNR vs l1/l3](SNR_shapes_l1l3_nb20.png)
+![shapes — SNR vs l2/l3](SNR_shapes_l2l3_nb20.png)
+![shapes — SNR (l1/l2, l1/l3)](SNR_shapes_l1l2_l1l3_nb20.png)
+![shapes — SNR (l1/l2, l2/l3)](SNR_shapes_l1l2_l2l3_nb20.png)
+![shapes — SNR (l1/l3, l2/l3)](SNR_shapes_l1l3_l2l3_nb20.png)
+
+- The 1D curves oscillate within roughly $\pm 2$ with no coherent trend, and the
+  heatmaps have no coherent region. This looks like noise more
+  than signal.
