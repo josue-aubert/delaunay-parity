@@ -54,7 +54,7 @@ for s in SETS:
         for (i, j) in PAIRS:                       # 2D bins (flattened)
             flat = b[i] * NB + b[j]
             A2[(i, j)][s][real] = np.bincount(flat, weights=sign, minlength=NB * NB)[:NB * NB] / Ntet
-    print(f"{s} done", flush=True)
+        print(f"{s}, {real} done", flush=True)
 
 # --- 3. paired SNR helper (cosmic variance cancelled) ---
 def paired_snr(A):
